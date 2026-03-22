@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Novel Site</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">My Novel Site</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#">Browse Novels</a></li>
+                <li><a href="#">Genres</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content-wrapper">
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" placeholder="Search novels, genres, authors…">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">Latest Updates</h2>
+            <div class="updates-grid">
+
+                <div class="novel-card">
+                    <img src="novel-1/cover.jpg" alt="Novel Title 1 cover" class="cover-img"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div class="cover-placeholder" style="display:none;">Cover</div>
+                    <div class="card-info">
+                        <h3>Novel Title 1</h3>
+                        <p class="chapter">Chapter 15</p>
+                        <p class="time">Updated 2 hours ago</p>
+                        <a href="novel-1/index.html" class="read-more">Read More ›</a>
+                    </div>
+                </div>
+
+                <div class="novel-card">
+                    <div class="cover-placeholder">Cover</div>
+                    <div class="card-info">
+                        <h3>Novel Title 2</h3>
+                        <p class="chapter">Chapter 8</p>
+                        <p class="time">Updated 5 hours ago</p>
+                        <a href="#" class="read-more">Read More ›</a>
+                    </div>
+                </div>
+
+                <div class="novel-card">
+                    <div class="cover-placeholder">Cover</div>
+                    <div class="card-info">
+                        <h3>Novel Title 3</h3>
+                        <p class="chapter">Chapter 22</p>
+                        <p class="time">Updated 1 day ago</p>
+                        <a href="#" class="read-more">Read More ›</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!--<footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">My Novel Site</div>
+                <p>A place for stories that linger. Read, explore, and lose yourself in worlds built one chapter at a time.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="#">Browse Novels</a>
+                <a href="#">Genres</a>
+                <a href="#">Latest Updates</a>
+                <a href="#">Popular</a>
+            </div>
+            <div class="footer-col">
+                <h4>About</h4>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 My Novel Site</span>
+            <span>Made with ♥ and GitHub Pages</span>
+        </div>
+    </footer> -->
+
+</body>
+</html>
