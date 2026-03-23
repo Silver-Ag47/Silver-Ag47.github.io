@@ -50,7 +50,7 @@ The Long Game is a dark fantasy gamelit novel about second chances, the beauty o
             <h2 class="section-title">Chapters</h2>
             <ul class="novel-list">
                 <li>
-                    <a href="chapter-1.html">Chapter 1: Null Pointer</a>
+                    <a href="chapter-1.html">Chapter 1: Null Pointer <p class="views">👁 <span id="views-chapter-1">0</span> views</p></a>
                 </li>
                 <li>
                     <a href="index.html">Chapter 2: The Journey Begins "coming soon"</a>
@@ -84,6 +84,27 @@ The Long Game is a dark fantasy gamelit novel about second chances, the beauty o
             <span>Made with ♥ and GitHub Pages</span>
         </div>
     </footer>
+<script>
+  function trackView(id) {
+    const key = `views-${id}`;
+    const count = parseInt(localStorage.getItem(key) || '0') + 1;
+    localStorage.setItem(key, count);
+    return count;
+  }
 
+  function displayViews(id) {
+    const key = `views-${id}`;
+    const count = parseInt(localStorage.getItem(key) || '0');
+    const el = document.getElementById(`views-${id}`);
+    if (el) el.textContent = count;
+  }
+
+  // Display current count on page load
+  displayViews('chapter-1');
+
+  // Increment when "Read More" is clicked
+  document.querySelector('a[href="chapter-1.html"]')
+    .addEventListener('click', () => trackView('chapter-1'));
+</script>
 </body>
 </html>
