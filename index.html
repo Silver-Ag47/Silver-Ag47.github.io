@@ -44,6 +44,7 @@
                         <h3>The Long Game</h3>
                         <p class="chapter">Chapter 1</p>
                         <p class="time">Updated 3/23/26</p>
+						<p class="views">👁 <span id="views-novel-1">0</span> views</p>
                         <a href="novel-1/index.html" class="read-more">Read More ›</a>
                     </div>
                 </div>
@@ -73,10 +74,10 @@
 
     </main>
 
-    <footer class="site-footer">
+    <!--<footer class="site-footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <div class="logo">NovelNest</div>
+                <div class="logo">My Novel Site</div>
                 <p>A place for stories that linger. Read, explore, and lose yourself in worlds built one chapter at a time.</p>
             </div>
             <div class="footer-col">
@@ -94,10 +95,31 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <span>© 2026 NovelNest</span>
+            <span>© 2026 My Novel Site</span>
             <span>Made with ♥ and GitHub Pages</span>
         </div>
-    </footer>
+    </footer> -->
+<script>
+  function trackView(novelId) {
+    const key = `views-${novelId}`;
+    const count = parseInt(localStorage.getItem(key) || '0') + 1;
+    localStorage.setItem(key, count);
+    return count;
+  }
 
+  function displayViews(novelId) {
+    const key = `views-${novelId}`;
+    const count = parseInt(localStorage.getItem(key) || '0');
+    const el = document.getElementById(`views-${novelId}`);
+    if (el) el.textContent = count;
+  }
+
+  // Display current count on page load
+  displayViews('novel-1');
+
+  // Increment when "Read More" is clicked
+  document.querySelector('a[href="novel-1/index.html"]')
+    .addEventListener('click', () => trackView('novel-1'));
+</script>
 </body>
 </html>
