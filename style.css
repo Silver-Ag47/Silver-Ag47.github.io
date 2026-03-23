@@ -567,7 +567,6 @@ body {
     .chapter-footer-nav { flex-direction: column; align-items: stretch; }
     .nav-btn { justify-content: center; }
 }
-
 .logo {
     display: flex;
     align-items: center;
@@ -648,4 +647,9 @@ body {
     margin: 0 0 20px 28px;   /* top right bottom left */
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.views {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 2px 0;
 }
