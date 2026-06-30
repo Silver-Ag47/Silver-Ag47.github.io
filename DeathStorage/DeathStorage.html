@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeathStorage — Joutar0U Plugins</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+ 
+  :root{
+    --bg:#11151C;
+    --surface:#1A2029;
+    --surface-2:#1F2630;
+    --rule:#262D3B;
+    --text:#E7EAF1;
+    --text-dim:#8B93A7;
+    --accent:#7FE7C4;
+    --accent-2:#E8A33D;
+    --mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans:'Inter', system-ui, -apple-system, sans-serif;
+  }
+ 
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+ 
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.5;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size:48px 48px;
+    background-position:-1px -1px;
+    background-attachment:fixed;
+  }
+ 
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+ 
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(17,21,28,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:60px;}
+  .brand{font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:0.02em;}
+  .brand .dot{color:var(--accent);}
+  .navlinks{display:flex; gap:28px; font-family:var(--mono); font-size:13px; color:var(--text-dim);}
+  .navlinks a:hover{color:var(--accent);}
+ 
+  /* ---------- BACK LINK ---------- */
+  .back{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:13px; color:var(--text-dim);
+    margin:40px 0 0;
+  }
+  .back:hover{color:var(--accent);}
+ 
+  /* ---------- PLUGIN HEADER ---------- */
+  .plugin-head{padding:28px 0 40px; position:relative;}
+  .eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--accent);
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow::before{content:'›'; color:var(--text-dim);}
+ 
+  .title-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  h1{
+    font-family:var(--mono);
+    font-size:clamp(28px, 4.5vw, 42px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .badge{
+    font-family:var(--mono); font-size:12px; padding:4px 11px;
+    border-radius:999px; border:1px solid var(--accent); color:var(--accent);
+  }
+ 
+  .lede{
+    margin-top:16px; max-width:60ch;
+    color:var(--text-dim); font-size:16px;
+  }
+ 
+  /* ---------- IMAGE ---------- */
+  .head-row{
+    margin-top:32px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+ 
+  .plugin-img{
+    width:260px;
+    height:260px;
+    border-radius:10px;
+    border:1px dashed var(--rule);
+    background:var(--surface);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .plugin-img:has(img){
+    border-style:solid;
+    background:transparent;
+  }
+  .plugin-img img{width:100%; height:100%; object-fit:cover; display:block;}
+  .plugin-img .img-placeholder{
+    font-family:var(--mono); font-size:14px; color:var(--text-dim);
+  }
+ 
+  /* ---------- PIXEL ANIMATION ---------- */
+  .pixel-anim{
+    flex:1;
+    min-width:260px;
+    max-width:520px;
+    height:260px;
+    border-radius:10px;
+    border:1px solid var(--rule);
+    background:var(--surface);
+    image-rendering:pixelated;
+    display:block;
+  }
+ 
+  /* ---------- DESCRIPTION ---------- */
+  .section{padding:48px 0;}
+  .section-head{
+    display:flex; align-items:baseline; gap:12px; margin-bottom:24px;
+    font-family:var(--mono);
+  }
+  .section-head .tag{color:var(--accent); font-size:13px;}
+  .section-head h2{font-size:20px; font-weight:600;}
+  .section-head .rule{flex:1; height:1px; background:var(--rule);}
+ 
+  .desc{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:10px;
+    padding:24px 26px;
+  }
+  .desc p{color:var(--text-dim); font-size:15px; max-width:68ch;}
+  .desc p + p{margin-top:14px;}
+ 
+  .desc ul{
+    list-style:none;
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:68ch;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .desc ul li{display:flex; align-items:flex-start; gap:8px;}
+ 
+  .meta{
+    margin-top:24px; font-family:var(--mono); font-size:13px;
+    color:var(--text-dim); display:grid; grid-template-columns:auto 1fr; gap:8px 14px;
+  }
+  .meta .k{color:var(--accent-2);}
+  .meta .v{color:var(--text);}
+ 
+  /* ---------- CTA ---------- */
+  .cta{margin-top:36px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13px; font-weight:500;
+    padding:12px 22px; border-radius:6px; border:1px solid var(--rule);
+    transition:border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-1px);}
+  .btn.solid{background:var(--accent); color:#0E1410; border-color:var(--accent);}
+  .btn.solid:hover{color:#0E1410; opacity:0.9; transform:translateY(-1px);}
+ 
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--rule); padding:40px 0; margin-top:40px;}
+  footer .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;}
+  footer .f-links{display:flex; gap:20px; font-family:var(--mono); font-size:13px; color:var(--text-dim);}
+  footer .f-links a:hover{color:var(--accent);}
+  footer .copy{font-family:var(--mono); font-size:12px; color:var(--text-dim);}
+ 
+  @media (max-width:640px){
+    .navlinks{display:none;}
+    .meta{grid-template-columns:1fr;}
+    .pixel-anim{display:none;}
+  }
+  
+  .highlight {
+    color: #8BF726;
+  }
+  
+  /* -----------------the code section ---------------*/
+  .code-box{
+    background:#0D1117;
+    border:1px solid var(--rule);
+    border-radius:10px;
+    overflow:hidden;
+    font-family:var(--mono);
+  }
+  .code-box-top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 16px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--rule);
+  }
+  .code-box-title{
+    font-size:12.5px; color:var(--text-dim);
+    display:flex; align-items:center; gap:8px;
+  }
+  .code-box-title::before{
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--accent); display:inline-block;
+  }
+  .code-box-copy{
+    font-family:var(--mono); font-size:11.5px; color:var(--text-dim);
+    background:none; border:1px solid var(--rule); border-radius:5px;
+    padding:4px 10px; cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .code-box-copy:hover{border-color:var(--accent); color:var(--accent);}
+  .code-box pre{
+    margin:0; padding:18px 20px;
+    overflow-x:auto;
+    font-size:13.5px; line-height:1.6;
+  }
+  .code-box code{font-family:var(--mono); white-space:pre;}
+ 
+  /* simple yaml-ish highlighting via spans */
+  .yk{color:var(--accent-2);}      /* keys */
+  .ys{color:var(--accent);}        /* strings/values */
+  .yc{color:var(--text-dim);}      /* comments */
+  .yn{color:#C9A0FF;}              /* numbers/bools */
+  
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Joutar0U<span class="dot">.</span>plugins</div>
+    <div class="navlinks">
+      <a href="../index.html#plugins">plugins</a>
+      <a href="../index.html#about">about</a>
+      <a href="../index.html#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; back to plugins</a>
+
+  <header class="plugin-head">
+    <div class="eyebrow">DeathStorage.yml</div>
+    <div class="title-row">
+      <h1>DeathStorage</h1>
+      <span class="badge">active</span>
+    </div>
+    <p class="lede">
+      DeathStorage is a special death chest that safely preserves all your inventory items in an organized chest GUI.
+    </p>
+    <div class="head-row">
+    <!-- replace the placeholder div below with an <img src="..." alt="DeathStorage screenshot"> when you have an image -->
+    <div class="plugin-img">
+      <img src="DeathStorage.jpg" alt="DeathStorage screenshot">
+    </div>
+	 <canvas id="pixelAnim" class="pixel-anim" width="480" height="240"></canvas>
+	 </div>
+  </header>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="tag">-></span>
+      <h2>Description</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="desc">
+      <p>
+        DeathStorage is a unique Minecraft plugin that revolutionizes the death experience!
+	    Instead of losing your items or having them scattered on the ground,
+	    this plugin creates or drops a special death chest that safely preserves
+		all your inventory items in an organized chest GUI..
+      </p>
+	  <p>
+	    Perfect for survival, PvP, BOXPVP and any server wanting better death mechanics!
+	  </p>
+
+      <div class="meta">
+        <span class="k">version:</span><span class="v">1.0.1</span>
+        <span class="k">Server-Version:</span><span class="v">1.21 - 26.2</span>
+		<span class="k">Dependencies:</span><span class="v">None</span>
+		<span class="k">Server-Software:</span><span class="v">Spigot/Paper</span>
+      </div>
+    </div>
+	
+	<div style="height: 30px;"></div>
+	<div class="section-head">
+      <span class="tag">-></span>
+      <h2>Key Features:</h2>
+      <div class="rule"></div>
+    </div>
+	
+	<div class="desc">
+      <ul>
+        <li><span class="highlight">➤</span> Safe death chests with all items preserved</li>
+        <li><span class="highlight">➤</span> Floating holograms with player info</li>
+        <li><span class="highlight">➤</span> One-click "Collect All" button</li>
+        <li><span class="highlight">➤</span> 7 customizable death sounds (or none)</li>
+        <li><span class="highlight">➤</span> Detailed Death Messages - Know exactly what killed you</li>
+		<li><span class="highlight">➤</span> Beautiful visual effects</li>
+        <li><span class="highlight">➤</span> Can control the despawn time on the config</li>
+      </ul>
+    </div>
+	
+	<div style="height: 30px;"></div>
+	<div class="section-head">
+      <span class="tag">-></span>
+      <h2>Commands:</h2>
+      <div class="rule"></div>
+    </div>
+	
+	<div class="desc">
+      <ul>
+        <li><span class="whity">- /deathstorage help</span></li>
+        <li><span class="whity">- /deathstorage sound &lt;sound&gt;</li>
+        <li><span class="whity">- /deathstorage reload</li>
+        <li><span class="whity">- /deathstorage about</li>
+    </div>
+	
+	<div style="height: 30px;"></div>
+	<div class="section-head">
+      <span class="tag">⚙</span>
+      <h2>Chat Format Configuration Options:</h2>
+      <div class="rule"></div>
+    </div>
+	
+	<div class="code-box">
+  <div class="code-box-top">
+    <span class="code-box-title">config.yml</span>
+    <button class="code-box-copy" onclick="
+      navigator.clipboard.writeText(document.getElementById('configYmlCode').innerText);
+      this.innerText='copied!';
+      setTimeout(()=>this.innerText='copy',1200);
+    ">copy</button>
+  </div>
+  <pre><code id="configYmlCode"><span class="yc"># DeathStorage Configuration</span>
+<span class="yc"># Available sounds: ENDERMAN_DEATH, WITHER_DEATH, LIGHTNING, DRAGON_GROWL, GHAST_SCREAM, TOTEM, NONE</span>
+<span class="yk">death-sound:</span> <span class="ys">None</span>
+<span class="yc"># Death chest despawn time in seconds (0 = never despawn)</span>
+<span class="yk">chest-despawn-time:</span> <span class="ys">300</span></code></pre>
+</div>
+
+
+    <div class="cta">
+      <!-- add the real SpigotMC link here when ready -->
+      <a class="btn solid" href="https://www.spigotmc.org/resources/deathstorage-1-21-_-26-2.136511/" target="_blank" rel="noopener">View on SpigotMC →</a>
+      <a class="btn" href="../index.html#plugins">← All plugins</a>
+    </div>
+  </section>
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="f-links">
+      <a href="https://discord.gg/V2tMdnDUq">Discord : snfour_v</a>
+      <a href="#">GitHub</a>
+      <a href="https://www.spigotmc.org/members/joutar0u.2323052/">SpigotMC profile</a>
+    </div>
+    <div class="copy">© 2026 Joutar0U</div>
+  </div>
+</footer>
+<script>
+(function(){
+  const canvas = document.getElementById('pixelAnim');
+  const ctx = canvas.getContext('2d');
+ 
+  // low-res grid scaled up by CSS image-rendering:pixelated
+  const COLS = 48, ROWS = 24;
+  const cellW = canvas.width / COLS;
+  const cellH = canvas.height / ROWS;
+ 
+  // colors pulled from the page palette
+  const palette = ['#11151C', '#1A2029', '#1F2630', '#262D3B', '#7FE7C4', '#E8A33D'];
+ 
+  // "garbled" vs "fixed" character glyphs drawn as pixel blocks
+  // we simulate scrambled noise resolving into a clean readable pattern (like ArabicFix resolving text)
+  const grid = new Array(COLS * ROWS).fill(0);
+ 
+  // target pattern: a simple right-to-left "checkmark/text line" shape to represent fixed text
+  function buildTarget(){
+    const target = new Array(COLS * ROWS).fill(0);
+    // draw a few horizontal "text lines" of blocks, rtl-ish, to suggest corrected text rows
+    const lines = [6, 11, 16];
+    lines.forEach((row, li) => {
+      const len = 22 + li * 4;
+      const startCol = COLS - 6 - len;
+      for (let i = 0; i < len; i++){
+        if (Math.random() > 0.18){
+          const col = startCol + i;
+          target[row * COLS + col] = 4 + (Math.random() > 0.7 ? 1 : 0);
+        }
+      }
+    });
+    return target;
+  }
+ 
+  let target = buildTarget();
+  let progress = 0; // 0 = fully scrambled, 1 = fully resolved
+  let direction = 1;
+  let lastSwap = 0;
+ 
+  function randomNoiseValue(){
+    return Math.random() > 0.85 ? Math.floor(Math.random() * 4) : 0;
+  }
+ 
+  function step(timestamp){
+    // animate progress as a slow pulse: scramble -> resolve -> hold -> rescramble
+    progress += direction * 0.004;
+    if (progress >= 1){ progress = 1; direction = -1; lastSwap = timestamp; }
+    if (progress <= 0 && direction === -1){
+      progress = 0;
+      direction = 1;
+      target = buildTarget();
+    }
+ 
+    for (let i = 0; i < grid.length; i++){
+      const isTargetCell = target[i] > 0;
+      if (isTargetCell){
+        // resolve toward target color based on progress, with flicker before settling
+        if (Math.random() < progress){
+          grid[i] = target[i];
+        } else {
+          grid[i] = randomNoiseValue();
+        }
+      } else {
+        // background cells occasionally flicker with faint noise, less as progress increases
+        grid[i] = Math.random() < (0.04 * (1 - progress)) ? 1 + Math.floor(Math.random()*2) : 0;
+      }
+    }
+ 
+    draw();
+    requestAnimationFrame(step);
+  }
+ 
+  function draw(){
+    ctx.fillStyle = palette[0];
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+ 
+    for (let r = 0; r < ROWS; r++){
+      for (let c = 0; c < COLS; c++){
+        const v = grid[r * COLS + c];
+        if (v === 0) continue;
+        ctx.fillStyle = palette[v];
+        ctx.fillRect(c * cellW, r * cellH, cellW, cellH);
+      }
+    }
+  }
+ 
+  requestAnimationFrame(step);
+})();
+</script>
+
+</body>
+</html>
